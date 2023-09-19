@@ -4,10 +4,25 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      validationSchema: Joi.object({
+        DB_USERNAME: Joi.string().required(),
+        DB_PASSWORD: Joi.string().required(),
+        DB_DATABASE: Joi.string().required(),
+        DB_HOST: Joi.string().hostname(),
+        DB_PORT: Joi.number().port(),
+      }).messages({
+        'any.required': '{{#label}} is a required environment variable (you may set it up in .env file)',
+        'string.base': 'Environment variable {{#label}} must be a string (you may set it up in .env file)',
+        'string.hostname': 'Environment variable {{#label}} must be a valid hostname (you may set it up in .env file)',
+        'number.base': 'Environment variable {{#label}} must be a number (you may set it up in .env file)',
+        'number.port': 'Environment variable {{#label}} must be a valid port (you may set it up in .env file)',
+      })
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
