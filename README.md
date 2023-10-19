@@ -7,6 +7,7 @@ Simple TODO list backend
 ## Configuration
 
 Set up required environment variables e.g. by copying or renaming `.env.example` file to `.env` and adjusting its values according to your setting.
+Change JWT_SECRET value to some long enough (at least 32 characters) random string.
 
 ## Installation
 
