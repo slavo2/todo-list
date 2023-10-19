@@ -13,7 +13,7 @@ export class UsersService {
         private usersRepository: Repository<User>,
     ) { }
 
-    async addUser(username: string, password: string): Promise<User | false | null> {
+    async addUser(username: string, password: string): Promise<User | false > {
         if (!username || !password) {
 
             throw new Error('username and password are required');
