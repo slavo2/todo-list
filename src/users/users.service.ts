@@ -27,7 +27,7 @@ export class UsersService {
         const user = new User();
         user.username = username;
         user.passwordHash = hash;
-        this.usersRepository.save(user);
+        await this.usersRepository.save(user);
         const { passwordHash, ...result } = user;
 
         return result;

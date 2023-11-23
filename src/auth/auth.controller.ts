@@ -13,7 +13,7 @@ export class AuthController {
     @ApiUnauthorizedResponse({ description: 'Unathorized.' })
     @HttpCode(HttpStatus.OK)
     @Post('login')
-    login(@Body() loginUserDto: LoginUserDto): Promise<LoginUserResponseDto> {
-        return this.authService.signIn(loginUserDto.username, loginUserDto.password);
+    async login(@Body() loginUserDto: LoginUserDto): Promise<LoginUserResponseDto> {
+        return await this.authService.signIn(loginUserDto.username, loginUserDto.password);
     }
 }
