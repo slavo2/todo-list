@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Post } from "@nestjs/common";
 import { RegisterUserDto } from "./register-user.dto";
 import { UsersService } from "./users.service";
-import { Public } from "src/auth/public.decorator";
+import { Public } from "../auth/public.decorator";
 import { ApiBadRequestResponse } from "@nestjs/swagger";
 
 
