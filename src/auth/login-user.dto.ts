@@ -15,3 +15,7 @@ export class LoginUserDto {
     @IsByteLength(8, 70)  
     password: string;
 }
+
+export class LoginUserResponseDto {
+    access_token: string;
+}

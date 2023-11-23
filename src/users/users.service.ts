@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./user.entity";
 import * as bcrypt from 'bcrypt';
+import { RegisterUserResponseDto } from "./register-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -13,7 +14,7 @@ export class UsersService {
         private usersRepository: Repository<User>,
     ) { }
 
-    async addUser(username: string, password: string): Promise<User | false > {
+    async addUser(username: string, password: string): Promise<RegisterUserResponseDto | false > {
         if (!username || !password) {
 
             throw new Error('username and password are required');
