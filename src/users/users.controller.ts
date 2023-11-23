@@ -2,6 +2,7 @@ import { BadRequestException, Body, Controller, Post } from "@nestjs/common";
 import { RegisterUserDto } from "./register-user.dto";
 import { UsersService } from "./users.service";
 import { Public } from "src/auth/public.decorator";
+import { ApiBadRequestResponse } from "@nestjs/swagger";
 
 
 @Controller('users')
@@ -10,6 +11,7 @@ export class UsersController {
     
     @Public()
     @Post()
+    @ApiBadRequestResponse({ description: 'Bad request.' })
     async register(@Body() registerUserDto: RegisterUserDto) {
         const result = await this.usersService.addUser(registerUserDto.username, registerUserDto.password);
 
