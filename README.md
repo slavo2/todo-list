@@ -28,6 +28,10 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Api documentation
+
+Generated Swagger API documentation can be found under /api endpoint
+
 ## Test
 
 ```bash
