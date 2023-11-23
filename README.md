@@ -32,6 +32,12 @@ $ npm run start:prod
 
 Generated Swagger API documentation can be found under /api endpoint
 
+To use features provided by Swagger CLI plugin, you might need to run
+
+```
+$ npm run start -b swc --type-check
+```
+
 ## Test
 
 ```bash
