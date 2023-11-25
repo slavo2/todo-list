@@ -3,7 +3,7 @@ import { ListsService } from './lists.service';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
 import { Public } from 'src/auth/public.decorator';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiForbiddenResponse, ApiNotFoundResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { idIsUUIDParam } from './dto/id-is-uuid-param.dto';
 import { Request } from 'express';
 import { GetListResponseDto } from './dto/get-list-response.dto';
@@ -18,6 +18,8 @@ export class ListsController {
   ) { }
 
   @ApiBearerAuth()
+  @ApiBadRequestResponse({ description: 'Bad request.' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
   @Post()
   create(@Req() request: Request, @Body() createListDto: CreateListDto): Promise<GetListResponseDto> {
     const user = { username: request["user"].username, id: request["user"].id };
@@ -31,6 +33,7 @@ export class ListsController {
   }
 
   @Public()
+  @ApiNotFoundResponse({ description: 'Not found.' })
   @Get(':id')
   async findOne(@Param() { id }: idIsUUIDParam): Promise<GetListResponseDto> {
     const list = await this.listsService.findOne(id);
@@ -41,6 +44,10 @@ export class ListsController {
   }
 
   @ApiBearerAuth()
+  @ApiBadRequestResponse({ description: 'Bad request.' })
+  @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
+  @ApiForbiddenResponse({ description: 'Forbidden.' })
+  @ApiNotFoundResponse({ description: 'Not found.' })
   @Post(':id/share')
   async share(@Req() request: Request, @Param() { id }: idIsUUIDParam, @Body() shareListDto: ShareListDto): Promise<GetListResponseDto> {
     const list = await this.listsService.findOne(id);
