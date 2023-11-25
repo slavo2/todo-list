@@ -4,6 +4,7 @@ import { UpdateListDto } from './dto/update-list.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { List } from './entities/list.entity';
+import { User } from 'src/users/user.entity';
 
 @Injectable()
 export class ListsService {
@@ -12,12 +13,12 @@ export class ListsService {
     private listsRepository: Repository<List>,
   ) { }
 
-  create(createListDto: CreateListDto, userId: string): Promise<List> {
-    createListDto["owners"] = [{ id: userId }];
+  create(createListDto: CreateListDto, user: User) {
+    createListDto["owners"] = [user];
     return this.listsRepository.save(createListDto);
   }
 
-  findAll(): Promise<List[]> {
+  findAll() {
     return this.listsRepository.find({
       relations: {
         owners: true,
@@ -25,13 +26,27 @@ export class ListsService {
     });
   }
 
-  findOne(id: string): Promise<List> {
+  findOne(id: string) {
     return this.listsRepository.findOne({
       where: { id },
       relations: {
         owners: true,
       },
     });
+  }
+
+  isOwner(list: List, userId: string) {
+    for (const owner of list.owners) {
+      if (owner.id === userId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  addOwner(list: List, user: User) {
+    list.owners.push(user);
+    return this.listsRepository.save(list);
   }
 
   update(id: string, updateListDto: UpdateListDto) {

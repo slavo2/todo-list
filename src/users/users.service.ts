@@ -46,6 +46,12 @@ export class UsersService {
         });
     }
 
+    findOneById(id: string): Promise<User | null> {
+        return this.usersRepository.findOne({
+            where: { id },
+        });
+    }
+
     async isUsernameUsed(username: string): Promise<boolean> {
         const user = await this.findOneByUsernameWithoutPasswordHash(username);
 
