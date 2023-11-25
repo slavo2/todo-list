@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ListsService } from './lists.service';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
+import { Public } from 'src/auth/public.decorator';
 
 @Controller('lists')
 export class ListsController {
@@ -12,11 +13,13 @@ export class ListsController {
     return this.listsService.create(createListDto);
   }
 
+  @Public()
   @Get()
   findAll() {
     return this.listsService.findAll();
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.listsService.findOne(+id);
