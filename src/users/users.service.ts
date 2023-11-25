@@ -33,12 +33,21 @@ export class UsersService {
         return result;
     }
 
-    private findOneByUsernameKeepPasswordHash(username: string): Promise<User | null> {
-        return this.usersRepository.findOneBy({ username });
+    private findOneByUsernameWithPasswordHash(username: string): Promise<User | null> {
+        return this.usersRepository.findOne({
+            where: { username },
+            select: ["id", "username", "passwordHash"],            
+        });
+    }
+
+    private findOneByUsernameWithoutPasswordHash(username: string): Promise<User | null> {
+        return this.usersRepository.findOne({
+            where: { username },
+        });
     }
 
     async isUsernameUsed(username: string): Promise<boolean> {
-        const user = await this.findOneByUsernameKeepPasswordHash(username);
+        const user = await this.findOneByUsernameWithoutPasswordHash(username);
 
         return user ? true : false;
     }
@@ -48,7 +57,7 @@ export class UsersService {
 
             throw new Error('username and password are required');
         }
-        const user = await this.findOneByUsernameKeepPasswordHash(username);
+        const user = await this.findOneByUsernameWithPasswordHash(username);
         if (!user) {
 
             return null;

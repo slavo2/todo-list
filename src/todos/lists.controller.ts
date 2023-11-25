@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, Req } from '@nestjs/common';
 import { ListsService } from './lists.service';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
 import { Public } from 'src/auth/public.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { idIsUUIDParam } from './dto/id-is-uuid-param.dto';
+import { Request } from 'express';
 
 @Controller('lists')
 export class ListsController {
@@ -12,8 +13,8 @@ export class ListsController {
 
   @ApiBearerAuth()
   @Post()
-  create(@Body() createListDto: CreateListDto) {
-    return this.listsService.create(createListDto);
+  create(@Req() request: Request, @Body() createListDto: CreateListDto) {
+    return this.listsService.create(createListDto, request["user"].id);
   }
 
   @Public()

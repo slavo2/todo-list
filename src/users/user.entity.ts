@@ -8,6 +8,6 @@ export class User {
     @Column({unique: true})
     username: string;
 
-    @Column({name: 'password_hash'})
+    @Column({name: 'password_hash', select: false})
     passwordHash?: string;
 }

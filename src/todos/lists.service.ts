@@ -12,16 +12,26 @@ export class ListsService {
     private listsRepository: Repository<List>,
   ) { }
 
-  create(createListDto: CreateListDto):Promise<List> {
+  create(createListDto: CreateListDto, userId: string): Promise<List> {
+    createListDto["owners"] = [{ id: userId }];
     return this.listsRepository.save(createListDto);
   }
 
   findAll(): Promise<List[]> {
-    return this.listsRepository.find();
+    return this.listsRepository.find({
+      relations: {
+        owners: true,
+      }
+    });
   }
 
   findOne(id: string): Promise<List> {
-    return this.listsRepository.findOneBy({ id });
+    return this.listsRepository.findOne({
+      where: { id },
+      relations: {
+        owners: true,
+      },
+    });
   }
 
   update(id: string, updateListDto: UpdateListDto) {
