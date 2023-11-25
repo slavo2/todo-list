@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ListsModule } from './lists/lists.module';
+import { TodosModule } from './todos/todos.module';
 import * as Joi from 'joi';
 
 @Module({
@@ -42,6 +43,7 @@ import * as Joi from 'joi';
     UsersModule,
     AuthModule,
     ListsModule,
+    TodosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
