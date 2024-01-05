@@ -36,6 +36,20 @@ export class TodosService {
       relations: {
         author: true,
         list: true,
+        flags: true,
+      },
+    });
+  }
+
+  findOneWithListOwners(id: string) {
+    return this.todosRepository.findOne({
+      where: { id },
+      relations: {
+        author: true,
+        flags: true,
+        list: {
+          owners: true,
+        }
       },
     });
   }

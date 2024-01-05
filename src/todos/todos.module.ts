@@ -7,10 +7,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { List } from './entities/list.entity';
 import { UsersModule } from '../users/users.module';
 import { Todo } from './entities/todo.entity';
+import { FlagsService } from './flags.service';
+import { Flag } from './entities/flag.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([List, Todo]), UsersModule],
+  imports: [TypeOrmModule.forFeature([List, Todo, Flag]), UsersModule],
   controllers: [TodosController, ListsController],
-  providers: [TodosService, ListsService],
+  providers: [TodosService, ListsService, FlagsService],
 })
 export class TodosModule {}

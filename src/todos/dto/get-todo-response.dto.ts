@@ -1,5 +1,3 @@
-import { GetListResponseDto } from "./get-list-response.dto";
-
 export class GetTodoResponseDto {
     id: string;
     title: string;

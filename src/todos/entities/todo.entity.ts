@@ -1,6 +1,7 @@
 import { User } from "../../users/user.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { List } from "./list.entity";
+import { Flag } from "./flag.entity";
 
 @Entity()
 export class Todo {
@@ -21,4 +22,7 @@ export class Todo {
 
     @ManyToOne(() => User)
     author: User
+
+    @ManyToMany(() => Flag, (flag) => flag.todos)
+    flags: Flag[]
 }
