@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, Req, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { ListsService } from './lists.service';
 import { CreateListDto } from './dto/create-list.dto';
-import { UpdateListDto } from './dto/update-list.dto';
 import { Public } from '../auth/public.decorator';
 import { ApiBadRequestResponse, ApiBearerAuth, ApiForbiddenResponse, ApiNotFoundResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { idIsUUIDParam } from './dto/id-is-uuid-param.dto';
@@ -65,25 +64,5 @@ export class ListsController {
       throw new BadRequestException('Given user is already an owner of this list.')
     }
     return this.listsService.addOwner(list, newOwner);
-  }
-
-  @ApiBearerAuth()
-  @Patch(':id')
-  async update(@Param() { id }: idIsUUIDParam, @Body() updateListDto: UpdateListDto) {
-    const list = await this.listsService.findOne(id);
-    if (!list) {
-      throw new NotFoundException();
-    }
-    return this.listsService.update(id, updateListDto);
-  }
-
-  @ApiBearerAuth()
-  @Delete(':id')
-  async remove(@Param() { id }: idIsUUIDParam) {
-    const list = await this.listsService.findOne(id);
-    if (!list) {
-      throw new NotFoundException();
-    }
-    return this.listsService.remove(id);
   }
 }
