@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, BadRequestException, ForbiddenException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { TodosService } from './todos.service';
 import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { GetTodoResponseDto } from './dto/get-todo-response.dto';
-import { ApiBadRequestResponse, ApiBearerAuth, ApiForbiddenResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiBearerAuth, ApiNotFoundResponse, ApiForbiddenResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { Public } from 'src/auth/public.decorator';
+import { idIsUUIDParam } from './dto/id-is-uuid-param.dto';
 import { ListsService } from './lists.service';
 
 @Controller('todos')
@@ -36,9 +38,15 @@ export class TodosController {
     return this.todosService.findAll();
   }
 
+  @Public()
+  @ApiNotFoundResponse({ description: 'Not found.' })
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.todosService.findOne(+id);
+  async findOne(@Param() { id }: idIsUUIDParam): Promise<GetTodoResponseDto> {
+    const todo = await this.todosService.findOne(id);
+    if (!todo) {
+      throw new NotFoundException();
+    }
+    return todo;
   }
 
   @Patch(':id')
