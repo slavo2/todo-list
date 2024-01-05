@@ -23,7 +23,12 @@ export class TodosService {
   }
 
   findAll() {
-    return `This action returns all todos`;
+    return this.todosRepository.find({
+      relations: {
+        author: true,
+        list: true,
+      },
+    });
   }
 
   findOne(id: string) {

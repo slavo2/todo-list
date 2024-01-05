@@ -1,20 +1,15 @@
 import { GetListResponseDto } from "./get-list-response.dto";
 
-export class GetTodoResponseDto {
+export class CreateTodoResponseDto {
     id: string;
     title: string;
     text: string;
     deadline: Date;
     author: Author;
-    list: List;
+    list: GetListResponseDto;
 }
 
 class Author {
     id: string;
     username: string;
-}
-
-class List {
-    id: string;
-    name: string;
 }

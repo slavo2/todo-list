@@ -7,6 +7,7 @@ import { ApiBadRequestResponse, ApiBearerAuth, ApiNotFoundResponse, ApiForbidden
 import { Public } from 'src/auth/public.decorator';
 import { idIsUUIDParam } from './dto/id-is-uuid-param.dto';
 import { ListsService } from './lists.service';
+import { CreateTodoResponseDto } from './dto/create-todo-response.dto';
 
 @Controller('todos')
 export class TodosController {
@@ -20,7 +21,7 @@ export class TodosController {
   @ApiUnauthorizedResponse({ description: 'Unauthorized.' })
   @ApiForbiddenResponse({ description: 'Forbidden.'})
   @Post()
-  async create(@Req() request: Request, @Body() createTodoDto: CreateTodoDto): Promise<GetTodoResponseDto> {
+  async create(@Req() request: Request, @Body() createTodoDto: CreateTodoDto): Promise<CreateTodoResponseDto> {
     const userId = request["user"].id;
     const user = { username: request["user"].username, id: userId };
     const list = await this.listsService.findOne(createTodoDto.listId);
@@ -33,8 +34,10 @@ export class TodosController {
     return this.todosService.create(createTodoDto, list, user);
   }
 
+
+  @Public()
   @Get()
-  findAll() {
+  findAll(): Promise<GetTodoResponseDto[]> {
     return this.todosService.findAll();
   }
 
