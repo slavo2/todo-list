@@ -2,13 +2,13 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, NotFoundException, R
 import { ListsService } from './lists.service';
 import { CreateListDto } from './dto/create-list.dto';
 import { UpdateListDto } from './dto/update-list.dto';
-import { Public } from 'src/auth/public.decorator';
+import { Public } from '../auth/public.decorator';
 import { ApiBadRequestResponse, ApiBearerAuth, ApiForbiddenResponse, ApiNotFoundResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { idIsUUIDParam } from './dto/id-is-uuid-param.dto';
 import { Request } from 'express';
 import { GetListResponseDto } from './dto/get-list-response.dto';
 import { ShareListDto } from './dto/share-list.dto';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 
 @Controller('lists')
 export class ListsController {

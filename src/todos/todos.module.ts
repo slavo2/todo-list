@@ -5,7 +5,7 @@ import { ListsController } from './lists.controller';
 import { ListsService } from './lists.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { List } from './entities/list.entity';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '../users/users.module';
 import { Todo } from './entities/todo.entity';
 
 @Module({

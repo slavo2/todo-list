@@ -4,7 +4,7 @@ import { CreateTodoDto } from './dto/create-todo.dto';
 import { UpdateTodoDto } from './dto/update-todo.dto';
 import { GetTodoResponseDto } from './dto/get-todo-response.dto';
 import { ApiBadRequestResponse, ApiBearerAuth, ApiNotFoundResponse, ApiForbiddenResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
-import { Public } from 'src/auth/public.decorator';
+import { Public } from '../auth/public.decorator';
 import { idIsUUIDParam } from './dto/id-is-uuid-param.dto';
 import { ListsService } from './lists.service';
 import { CreateTodoResponseDto } from './dto/create-todo-response.dto';
