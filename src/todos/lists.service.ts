@@ -35,6 +35,16 @@ export class ListsService {
     });
   }
 
+  findOneWithTodos(id: string) {
+    return this.listsRepository.findOne({
+      where: { id },
+      relations: {
+        owners: true,
+        todos: true,
+      },
+    });
+  }
+
   isOwner(list: List, userId: string) {
     for (const owner of list.owners) {
       if (owner.id === userId) {

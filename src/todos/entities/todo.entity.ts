@@ -16,7 +16,7 @@ export class Todo {
     @Column({nullable: true})
     deadline: Date;
 
-    @ManyToOne(() => List)
+    @ManyToOne(() => List, (list) => list.todos)
     list: List
 
     @ManyToOne(() => User)

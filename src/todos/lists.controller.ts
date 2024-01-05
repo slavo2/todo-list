@@ -36,7 +36,7 @@ export class ListsController {
   @ApiNotFoundResponse({ description: 'Not found.' })
   @Get(':id')
   async findOne(@Param() { id }: idIsUUIDParam): Promise<GetListResponseDto> {
-    const list = await this.listsService.findOne(id);
+    const list = await this.listsService.findOneWithTodos(id);
     if (!list) {
       throw new NotFoundException();
     }
